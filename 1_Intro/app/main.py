@@ -15,6 +15,3 @@ def get_db_info():
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-
-a = 10
