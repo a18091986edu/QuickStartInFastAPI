@@ -4,4 +4,98 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "environs>=14.6.0",
+    "fastapi[all]>=0.133.1",
+    "pydantic[email]>=2.12.5",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+    "ruff>=0.15.4",
+]
+
+[tool.ruff]
+# Целевая версия Python
+target-version = "py312"
+
+# Максимальная длина строки (как у Black)
+line-length = 88
+
+# Какие файлы проверять
+include = ["*.py", "*.pyi", "**/*.py", "**/*.pyi"]
+
+# Какие файлы игнорировать
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Настройки форматирования
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Настройки линтера
+[tool.ruff.lint]
+# Какие правила применять
+select = [
+    "E",   # Ошибки pycodestyle
+    "W",   # Предупреждения pycodestyle
+    "F",   # Ошибки Pyflakes
+    "I",   # Сортировка импортов (isort)
+    "B",   # Flake8-bugbear (поиск багов)
+    "C4",  # Flake8-comprehensions (оптимизация генераторов списков)
+    "UP",  # Pyupgrade (синтаксис новых версий Python)
+    "ARG", # Неиспользуемые аргументы функций
+    "SIM", # Упрощение кода
+    "RUF", # Специфичные для Ruff правила
+]
+
+# Правила, которые нужно игнорировать
+ignore = [
+    "E501",  # Слишком длинная строка (это обрабатывает форматтер)
+]
+
+# Разрешить автоматическое исправление для этих правил
+fixable = ["ALL"]
+
+# Не исправлять эти правила автоматически
+unfixable = []
+
+# Дополнительные настройки для отдельных правил
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]  # Разрешить assert в тестах
+"__init__.py" = ["F401"]    # Разрешить неиспользуемые импорты в __init__.py
+
+# Настройки для сортировки импортов
+[tool.ruff.lint.isort]
+known-first-party = ["src", "app"]
+known-third-party = ["fastapi", "pydantic", "sqlalchemy"]
